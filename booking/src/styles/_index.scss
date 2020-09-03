@@ -1,0 +1,42 @@
+@import "./colors.scss";
+@import "./header.scss";
+@import "./rental-home.scss";
+@import "./rental-details";
+
+html,
+body {
+  height: 100%;
+}
+
+.btw-container {
+  padding-top: 70px;
+}
+
+.type- {
+  &apartment {
+    color: #a72da3;
+  }
+  &house {
+    color: #bf1818;
+  }
+  &condo {
+    color: #d68000;
+  }
+}
+.navbar-dark .navbar-nav .nav-link:hover {
+  color: $main-blue-color;
+}
+
+.btn.btn-bwm-main {
+  border-color: $main-blue-color;
+  color: $main-blue-color;
+}
+
+.btn.btn-bwm-main:hover,
+.btn.btn-bwm-main:focus,
+.btn.btn-bwm-main:active {
+  background-color: $main-blue-color;
+  border-color: $main-blue-color;
+  color: white;
+  box-shadow: none;
+}

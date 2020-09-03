@@ -1,0 +1,20 @@
+.nabar {
+  padding: 10px 30 px;
+
+  .navbar-brand {
+    margin-right: 30px;
+    font-size: 27px;
+    letter-spacing: 1px;
+    color: $main-blue-color;
+    font-weight: bold;
+  }
+
+  .nav-item {
+    font-size: 18px;
+  }
+
+  .btm-search {
+    height: 40px;
+    width: 250px;
+  }
+}
