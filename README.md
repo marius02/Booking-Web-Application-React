@@ -1,5 +1,5 @@
 # Booking-Web-Application-React
-Booking application develope using React + Redux (React 16.12+) &amp; Node Js
+Booking application develop using React + Redux (React 16.12+) &amp; Node Js
 
 [React] - Intro To React (Components, JSX, Redux, State, Props, Bootstrap, Life Cycle Functions, Link To, Render)
 
