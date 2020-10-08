@@ -1,8 +1,8 @@
 import React from "react";
-import RentalCard from "../components/rental/RentalCard";
+import RentalCard from "components/rental/RentalCard";
 import { StateContext } from "../state-context";
 import { connect } from "react-redux";
-import { fetchRentals } from "../actions";
+import { fetchRentals } from "actions";
 
 class RentalHome extends React.Component {
   componentDidMount() {

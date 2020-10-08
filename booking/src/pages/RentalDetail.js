@@ -1,79 +1,94 @@
 import React from "react";
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import { fetchRentalById } from "actions";
+import { capitalize } from "helpers/functions";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 class RentalDetail extends React.Component {
+  componentDidMount() {
+    const { id } = this.props.match.params;
+    this.props.dispatch(fetchRentalById(id));
+  }
+
   render() {
+    const { rental } = this.props;
     return (
       <section id="rentalDetails">
-        <div class="upper-section">
-          <div class="row">
-            <div class="col-md-6">
+        <div className="upper-section">
+          <div className="row">
+            <div className="col-md-6">
               {/* <!-- TODO: Display rental image --> */}
-              <img src="#" alt="" />
+              <img src={rental.image} alt={rental.title} />
             </div>
-            <div class="col-md-6">
+            <div className="col-md-6">
               {/* <!-- TODO: Display rental image --> */}
-              <img src="#" alt="" />
+              <img src={rental.image} alt={rental.title} />
             </div>
           </div>
         </div>
 
-        <div class="details-section">
-          <div class="row">
-            <div class="col-md-8">
-              <div class="rental">
+        <div className="details-section">
+          <div className="row">
+            <div className="col-md-8">
+              <div className="rental">
                 {/* <!-- TODO: Display shared category --> */}
-                <h2 class="rental-type">true house</h2>
+                <h2 className={`rental-type type-${rental.category}`}>
+                  {rental.shared ? "Shared" : "whole"} {rental.category}
+                </h2>
                 {/* <!-- TODO: Display title --> */}
-                <h1 class="rental-title">Some Title</h1>
+                <h1 className="rental-title">{rental.title}</h1>
                 {/* <!-- TODO: Display city --> */}
-                <h2 class="rental-city">New York</h2>
-                <div class="rental-room-info">
+                <h2 className="rental-city">{capitalize(rental.city)}</h2>
+                <div className="rental-room-info">
                   {/* <!-- TODO: Display numOfRooms --> */}
                   <span>
-                    <i class="fa fa-building"></i>4 bedrooms
+                    <i className="fa fa-building"></i>
+                    {rental.numOfRooms} bedrooms
                   </span>
                   {/* // <!-- TODO: Display numOfRooms + 4 --> */}
                   <span>
-                    <i class="fa fa-user"></i> 8 guests
+                    <i className="fa fa-user"></i> {rental.numOfRooms + 4}{" "}
+                    guests
                   </span>
                   {/* // <!-- TODO: Display numOfRooms + 2 --> */}
                   <span>
-                    <i class="fa fa-bed"></i> 6 beds
+                    <i className="fa fa-bed"></i> {rental.numOfRooms + 2} beds
                   </span>
                 </div>
                 {/* <!-- TODO: Display description --> */}
-                <p class="rental-description">Some Description</p>
+                <p className="rental-description">{rental.description}</p>
                 <hr />
-                <div class="rental-assets">
-                  <h3 class="title">Assets</h3>
-                  <div class="row">
-                    <div class="col-md-6">
+                <div className="rental-assets">
+                  <h3 className="title">Assets</h3>
+                  <div className="row">
+                    <div className="col-md-6">
                       <span>
-                        <i class="fa fa-asterisk"></i> Cooling
+                        <FontAwesomeIcon icon="asterisk" /> Cooling
                       </span>
                       <span>
-                        <i class="fa fa-thermometer"></i> Heating
+                        <FontAwesomeIcon icon="thermometer" /> Heating
                       </span>
                       <span>
-                        <i class="fa fa-location-arrow"></i> Iron
+                        <FontAwesomeIcon icon="location-arrow" /> Iron
                       </span>
                     </div>
-                    <div class="col-md-6">
+                    <div className="col-md-6">
                       <span>
-                        <i class="fa fa-desktop"></i> Working area
+                        <FontAwesomeIcon icon="desktop" /> Working area
                       </span>
                       <span>
-                        <i class="fa fa-cube"></i> Washing machine
+                        <FontAwesomeIcon icon="cube" /> Washing machine
                       </span>
                       <span>
-                        <i class="fa fa-cube"></i> Dishwasher
+                        <FontAwesomeIcon icon="archive" /> Dishwasher
                       </span>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="col-md-4"> BOOKING</div>
+            <div className="col-md-4"> BOOKING</div>
           </div>
         </div>
       </section>
@@ -81,4 +96,6 @@ class RentalDetail extends React.Component {
   }
 }
 
-export default RentalDetail;
+const mapStateToProps = ({ rental }) => ({ rental });
+const rentalDetailWithRouter = withRouter(RentalDetail);
+export default connect(mapStateToProps)(rentalDetailWithRouter);
