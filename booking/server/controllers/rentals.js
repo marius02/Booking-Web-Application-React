@@ -1,50 +1,36 @@
-const rentals = [
-  {
-    _id: 1,
-    city: "New York",
-    title: "Very nice place",
-  },
-  {
-    _id: 2,
-    city: "Berlin",
-    title: "Very nice place as well",
-  },
-];
 
+const Rental = require('../models/rental');
 exports.getRentals = (req, res) => {
-  return res.json(rentals);
+  Rental.find({}, (error, data) => {
+    if(error) {
+      return Rental
+      .sendError(res, {status: 422, detail: 'Cannot retrive data'});
+    }
+    return res.json(data);
+  })
 };
 
 exports.getRentalById = (req, res) => {
   const { rentalId } = req.params;
-  const rental = rentals.find((r) => r._id === rentalId);
-  return res.json(rental);
+  Rental.findById(rentalId, (error, data) => {
+    if(error) {
+      return Rental
+      .sendError(res, {status: 422, detail: 'Cannot retrive data by id'});
+    }
+    return res.json(data);
+  })
 };
 
 exports.createRental = (req, res) => {
   const rentalData = req.body;
-  rentals.push(rentalData);
-  return res.json({ message: `Rental with id: ${rentalData._id} was added!` });
-};
+  const newRental = new Rental(rentalData);
 
-exports.deleteRental = (req, res) => {
-  const { id } = req.params;
-  const rentalIndex = rentals.findIndex((r) => r._id === id);
-  rentals.splice(rentalIndex, 1);
-  return res.json({
-    message: `Rental with id: ${id} was removed!`,
-  });
-};
+  newRental.save((error, createdRental) => {
+    if(error) {
+      return Rental
+      .sendError(res, {status: 422, detail: 'Cannot post rental data'});
+    }
+    return res.json({ message: `Rental with id: ${createdRental._id} was added!` });
+  })
+}
 
-exports.updateRental = (req, res) => {
-  const { id } = req.params;
-  const rentalToUpdate = req.body;
-  const rIndex = rentals.findIndex((r) => r._id === id);
-
-  rentals[rIndex].city = rentalToUpdate.city;
-  rentals[rIndex].title = rentalToUpdate.title;
-
-  return res.json({
-    message: `Rental with id: ${id} was updated!`,
-  });
-};
