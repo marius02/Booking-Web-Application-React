@@ -7,7 +7,7 @@ import RentalDetail from "./pages/RentalDetail";
 
 const Routes = () => {
   return (
-    <div class="container btw-container">
+    <div className="container btw-container">
       <Switch>
         <Route exact path="/">
           <RentalHome />
