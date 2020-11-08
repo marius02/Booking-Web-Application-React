@@ -1,8 +1,9 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import { sameAs } from "helpers/validators";
 
 const RegisterForm = ({ onSubmit }) => {
-  const { register, handleSubmit, errors } = useForm();
+  const { register, handleSubmit, errors, getValues } = useForm();
   const email_pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -74,7 +75,11 @@ const RegisterForm = ({ onSubmit }) => {
       <div className="form-group">
         <label htmlFor="passwordConfirmation">Confirm Password</label>
         <input
-          ref={register({ required: true, minLength: 5 })}
+          ref={register({
+            required: true,
+            minLength: 5,
+            validate: { sameAs: sameAs("password", getValues) },
+          })}
           name="passwordConfirmation"
           type="password"
           className="form-control"
@@ -88,6 +93,11 @@ const RegisterForm = ({ onSubmit }) => {
             {errors.passwordConfirmation.type === "minLength" && (
               <span>
                 Minimum length of password confirmation is 5 characters !
+              </span>
+            )}
+            {errors.passwordConfirmation.type === "sameAs" && (
+              <span>
+                Password confirmation should be same as the password !
               </span>
             )}
           </div>

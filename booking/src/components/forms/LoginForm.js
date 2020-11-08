@@ -1,5 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import FormError from "./FormError";
 
 const LoginForm = ({ onSubmit }) => {
   const { register, handleSubmit, errors } = useForm();
@@ -44,16 +45,6 @@ const LoginForm = ({ onSubmit }) => {
           className="form-control"
           id="password"
         />
-        {errors.password && (
-          <div className="alert alert-danger">
-            {errors.password.type === "required" && (
-              <span> Password is reguired</span>
-            )}
-            {errors.password.type === "minLength" && (
-              <span>Minimum length of password is 5 characters !</span>
-            )}
-          </div>
-        )}
       </div>
       <button type="submit" className="btn btn-bwm-main">
         Submit
