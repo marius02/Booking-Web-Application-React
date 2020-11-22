@@ -1,9 +1,11 @@
 const express = require("express");
 const app = express();
 const config = require("./config/dev");
+const { provideErrorHandler } = require("./middleware");
 
 const rentalRoutes = require("./routes/rentals");
 const userRoutes = require("./routes/users");
+const { onlyAuthUser } = require("./controllers/users");
 
 const mongoose = require("mongoose");
 require("./models/rental");
@@ -27,6 +29,11 @@ mongoose.connect(
 
 // parse application/json
 app.use(bodyParser.json());
+app.use(provideErrorHandler);
+
+app.get("/api/v1/secret", onlyAuthUser, (req, res) => {
+  return res.json({ message: "secret message" });
+});
 
 // API Routes
 app.use("/api/v1/rentals", rentalRoutes);
